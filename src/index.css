@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --ncct-ink: #172033;
+    --ncct-navy: #172b4d;
+    --ncct-blue: #2864dc;
+    --ncct-teal: #078f86;
+    --ncct-mint: #dff7ef;
+    --ncct-amber: #e29a35;
+    --ncct-paper: #f5f7f9;
+    --ncct-line: #dce4eb;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    @apply text-slate-800 antialiased min-h-screen selection:bg-teal-100 selection:text-slate-900;
+    background: var(--ncct-paper);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  button, input, select, textarea { font: inherit; }
+
+  button { cursor: pointer; }
+
+  ::selection { background: #bceee2; color: var(--ncct-ink); }
+
+  #root { min-height: 100vh; }
+
+  @media (min-width: 1024px) {
+    main { position: relative; }
+    main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.45;
+      background-image: radial-gradient(#c7d3dc 0.6px, transparent 0.6px);
+      background-size: 18px 18px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.65), transparent 58%);
+    }
+  }
+}
+
+/* Custom scrollbar for modern sleek UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Shared surfaces used by the dashboard views. */
+.ncct-card {
+  @apply bg-white border rounded-xl transition-all duration-200;
+  border-color: var(--ncct-line);
+  box-shadow: 0 5px 18px rgba(23, 43, 77, 0.045);
+}
+
+.ncct-card:hover { box-shadow: 0 10px 24px rgba(23, 43, 77, 0.08); }
+
+.ncct-card-header {
+  @apply px-5 py-4 border-b flex items-center justify-between;
+  border-color: #edf1f4;
+}
+
+.app-page-enter { animation: page-enter 420ms ease-out both; }
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Subtle pulses and custom keyframe animations if needed */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
