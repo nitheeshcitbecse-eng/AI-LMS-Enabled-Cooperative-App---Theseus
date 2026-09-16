@@ -1,0 +1,234 @@
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+import { useData } from './DataContext';
+import { homePathFor, pathForTab, routeFromPath } from '../routes/routePaths';
+import { traineeService, trainerService, syncService } from '../Services/api';
+
+const AppContext = createContext(undefined);
+
+/** Logs a failed background API call without interrupting the optimistic UI update. */
+const reportFailure = action => error => console.error(`[AppContext] ${action} failed:`, error);
+
+export const AppProvider = ({ children }) => {
+  const auth = useAuth();
+  const data = useData();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // The URL is the source of truth for which portal and page are showing.
+  const route = routeFromPath(location.pathname);
+  const userRole = route?.role ?? auth.user?.role ?? 'trainee';
+  const activeTab = route?.tab ?? null;
+
+  // Persona switches call setUserRole(role) then setActiveTab(page); the role is held
+  // briefly so shared page ids such as "profile" resolve inside the new portal.
+  const pendingRoleRef = useRef(null);
+
+  const setUserRole = role => {
+    pendingRoleRef.current = role;
+    navigate(homePathFor(role));
+  };
+
+  const setActiveTab = tab => {
+    const role = pendingRoleRef.current ?? userRole;
+    const replace = pendingRoleRef.current !== null;
+    pendingRoleRef.current = null;
+    navigate(pathForTab(tab, role), { replace });
+  };
+  const [language, setLanguage] = useState('en');
+  const [isOffline, setIsOffline] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [lastSyncedTime, setLastSyncedTime] = useState('09:42 AM');
+  const [pendingSyncCount, setPendingSyncCount] = useState(27);
+  const [selectedInstitute, setSelectedInstitute] = useState('ICM Chennai');
+  const [selectedConflictItem, setSelectedConflictItem] = useState(null);
+
+  // Once the session exists, routes/PublicRoute.jsx redirects to the requested page or the role's home.
+  const login = credentials => auth.login(credentials);
+  const signup = details => auth.signup(details);
+
+  const logout = () => auth.logout();
+
+  const [demoMode, setDemoMode] = useState('before');
+
+  const [activeModal, setActiveModal] = useState(null);
+  const [selectedCertificate, setSelectedCertificate] = useState(data.certificates?.[0] ?? null);
+  const [selectedOpportunity, setSelectedOpportunity] = useState(data.careerOpportunities?.[0] ?? null);
+  const [selectedTraineeForDrawer, setSelectedTraineeForDrawer] = useState(null);
+  const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
+
+  // Trainee state
+  const [closedLoop, setClosedLoop] = useState(data.closedLoopIntervention ?? null);
+  const [skills, setSkills] = useState(data.skills ?? []);
+  const [assessments, setAssessments] = useState(data.assessments ?? []);
+  const [notifications, setNotifications] = useState(data.notifications ?? []);
+  const certificates = data.certificates ?? [];
+  const opportunities = data.careerOpportunities ?? [];
+
+  // Trainer state
+  const [interventions, setInterventions] = useState(data.interventions ?? []);
+  const [competencyClaims, setCompetencyClaims] = useState(data.competencyEvidenceClaims ?? []);
+  const [trainerNotes, setTrainerNotes] = useState(data.trainerNotes ?? []);
+  const [traineeRiskList, setTraineeRiskList] = useState(data.traineeRiskList ?? []);
+
+  // When fresh data arrives from the API, re-seed the editable copies.
+  useEffect(() => {
+    if (data.dataStatus !== 'ready') return;
+    setClosedLoop(data.closedLoopIntervention ?? null);
+    setSkills(data.skills ?? []);
+    setAssessments(data.assessments ?? []);
+    setNotifications(data.notifications ?? []);
+    setInterventions(data.interventions ?? []);
+    setCompetencyClaims(data.competencyEvidenceClaims ?? []);
+    setTrainerNotes(data.trainerNotes ?? []);
+    setTraineeRiskList(data.traineeRiskList ?? []);
+    setSelectedCertificate(prev => prev ?? data.certificates?.[0] ?? null);
+    setSelectedOpportunity(prev => prev ?? data.careerOpportunities?.[0] ?? null);
+  }, [data.dataStatus, data.skills, data.interventions]);
+
+  const openModal = modalName => setActiveModal(modalName);
+  const closeModal = () => setActiveModal(null);
+
+  const syncData = async () => {
+    setIsSyncing(true);
+    try {
+      await syncService.syncOfflineRecords();
+      setPendingSyncCount(0);
+      setLastSyncedTime('Just now');
+      setIsOffline(false);
+    } catch (error) {
+      reportFailure('Sync')(error);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  const markNotificationAsRead = id => {
+    setNotifications(prev => prev.map(n => (n.id === id ? { ...n, read: true } : n)));
+    traineeService.markNotificationRead(id).catch(reportFailure('Mark notification read'));
+  };
+
+  const unreadNotificationCount = notifications.filter(n => !n.read).length;
+
+  const completeBoosterQuiz = score => {
+    setClosedLoop(prev => ({
+      ...prev,
+      afterScore: score,
+      status: 'verified',
+      interventionCompleted: true,
+    }));
+
+    setAssessments(prev =>
+      prev.map(a => (a.title.includes('Cooperative Accounting') ? { ...a, score: score, status: 'passed' } : a))
+    );
+
+    setSkills(prev =>
+      prev.map(s => (s.name.includes('Financial Analysis') ? { ...s, proficiency: score, status: 'verified' } : s))
+    );
+
+    traineeService.submitBoosterQuiz(score).catch(reportFailure('Submit booster quiz'));
+  };
+
+  const createIntervention = (topic, trainees, message, duration) => {
+    const newIntervention = {
+      id: `INT-2026-0${interventions.length + 1}`,
+      topic,
+      affectedTraineesCount: trainees.length,
+      traineesList: trainees,
+      beforeScore: 46,
+      afterScore: 74,
+      status: 'completed',
+      createdDate: 'Today',
+      deadline: 'In 3 days',
+      trainerMessage: message,
+      durationMinutes: duration,
+      improvementPoints: 28,
+    };
+    setInterventions(prev => [newIntervention, ...prev]);
+    trainerService.createIntervention({ topic, trainees, message, duration }).catch(reportFailure('Create intervention'));
+  };
+
+  const verifyCompetencyClaim = id => {
+    setCompetencyClaims(prev => prev.map(c => (c.id === id ? { ...c, status: 'verified' } : c)));
+    trainerService.verifyCompetencyClaim(id).catch(reportFailure('Verify competency claim'));
+  };
+
+  const addTrainerNote = (traineeId, text) => {
+    const newNote = {
+      id: `NOTE-${Date.now()}`,
+      traineeId,
+      noteText: text,
+      createdAt: 'Just now',
+      isPrivate: true,
+    };
+    setTrainerNotes(prev => [newNote, ...prev]);
+    trainerService.addTraineeNote({ traineeId, text }).catch(reportFailure('Save trainer note'));
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        isAuthenticated: auth.isAuthenticated,
+        currentUser: auth.user,
+        login,
+        signup,
+        logout,
+        userRole,
+        setUserRole,
+        activeTab,
+        setActiveTab,
+        language,
+        setLanguage,
+        isOffline,
+        setIsOffline,
+        isSyncing,
+        syncData,
+        lastSyncedTime,
+        pendingSyncCount,
+        selectedInstitute,
+        setSelectedInstitute,
+        selectedConflictItem,
+        setSelectedConflictItem,
+        demoMode,
+        setDemoMode,
+        activeModal,
+        openModal,
+        closeModal,
+        selectedCertificate,
+        setSelectedCertificate,
+        selectedOpportunity,
+        setSelectedOpportunity,
+        selectedTraineeForDrawer,
+        setSelectedTraineeForDrawer,
+        isAiDrawerOpen,
+        setIsAiDrawerOpen,
+        closedLoop,
+        completeBoosterQuiz,
+        interventions,
+        createIntervention,
+        competencyClaims,
+        verifyCompetencyClaim,
+        trainerNotes,
+        addTrainerNote,
+        traineeRiskList,
+        skills,
+        assessments,
+        certificates,
+        opportunities,
+        notifications,
+        markNotificationAsRead,
+        unreadNotificationCount,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export const useApp = () => {
+  const context = useContext(AppContext);
+  if (!context) throw new Error('useApp must be used within an AppProvider');
+  return context;
+};

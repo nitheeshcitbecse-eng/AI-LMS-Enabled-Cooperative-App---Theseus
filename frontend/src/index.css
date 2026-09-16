@@ -1,0 +1,776 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300..800;1,400..600&family=Source+Serif+4:opsz,wght@8..60,600..700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* ==========================================================================
+   NCCT Connect — Design System
+   A clean, professional blue-and-white language: beach blue for structure
+   and action, lagoon aqua as a quiet accent, white surfaces on a faint sea
+   mist, and semantic green / ochre / crimson reserved for status. Everything below is a token, so the whole
+   product inherits it without per-component edits.
+   ========================================================================== */
+
+@theme {
+  /* ---- Typeface ---- */
+  --font-sans: 'Source Sans 3', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---- Type scale: slightly larger and airier than stock ---- */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.45rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.6rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.7rem;
+  --text-xl: 1.3125rem;
+  --text-xl--line-height: 1.85rem;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 2.1rem;
+  --text-3xl: 2.125rem;
+  --text-3xl--line-height: 2.5rem;
+  --text-4xl: 2.75rem;
+  --text-4xl--line-height: 3.1rem;
+  --text-5xl: 3.5rem;
+  --text-5xl--line-height: 3.9rem;
+
+  /* ---- Weight ceiling: professional typography stops well short of black ---- */
+  --font-weight-medium: 500;
+  --font-weight-semibold: 590;
+  --font-weight-bold: 650;
+  --font-weight-extrabold: 680;
+  --font-weight-black: 720;
+
+  /* ---- Neutral ramp: sea-mist greys with a faint blue cast ---- */
+  --color-slate-50: oklch(0.986 0.005 230);
+  --color-slate-100: oklch(0.969 0.009 232);
+  --color-slate-200: oklch(0.930 0.014 234);
+  --color-slate-300: oklch(0.875 0.020 236);
+  --color-slate-400: oklch(0.715 0.027 240);
+  --color-slate-500: oklch(0.580 0.030 243);
+  --color-slate-600: oklch(0.468 0.032 246);
+  --color-slate-700: oklch(0.388 0.034 248);
+  --color-slate-800: oklch(0.292 0.036 250);
+  --color-slate-900: oklch(0.228 0.036 252);
+  --color-slate-950: oklch(0.160 0.032 254);
+
+  /* ---- Primary: beach blue, from shoreline foam to deep ocean ---- */
+  --color-indigo-50: oklch(0.975 0.014 232);
+  --color-indigo-100: oklch(0.947 0.030 233);
+  --color-indigo-200: oklch(0.898 0.057 234);
+  --color-indigo-300: oklch(0.828 0.092 235);
+  --color-indigo-400: oklch(0.738 0.125 237);
+  --color-indigo-500: oklch(0.652 0.140 240);
+  --color-indigo-600: oklch(0.575 0.140 243);
+  --color-indigo-700: oklch(0.500 0.126 246);
+  --color-indigo-800: oklch(0.430 0.106 248);
+  --color-indigo-900: oklch(0.365 0.086 250);
+  --color-indigo-950: oklch(0.295 0.066 252);
+
+  /* ---- Accent: clear lagoon aqua ---- */
+  --color-teal-50: oklch(0.980 0.015 212);
+  --color-teal-100: oklch(0.952 0.034 212);
+  --color-teal-200: oklch(0.908 0.062 213);
+  --color-teal-300: oklch(0.848 0.092 214);
+  --color-teal-400: oklch(0.775 0.115 216);
+  --color-teal-500: oklch(0.695 0.118 218);
+  --color-teal-600: oklch(0.600 0.105 221);
+  --color-teal-700: oklch(0.510 0.090 224);
+  --color-teal-800: oklch(0.430 0.074 227);
+  --color-teal-900: oklch(0.360 0.058 229);
+  --color-teal-950: oklch(0.260 0.042 231);
+
+  /* ---- Success: a grounded green, not a neon one ---- */
+  --color-emerald-50: oklch(0.977 0.017 162);
+  --color-emerald-100: oklch(0.948 0.038 162);
+  --color-emerald-200: oklch(0.899 0.066 163);
+  --color-emerald-300: oklch(0.831 0.097 163);
+  --color-emerald-400: oklch(0.745 0.117 163);
+  --color-emerald-500: oklch(0.658 0.117 164);
+  --color-emerald-600: oklch(0.559 0.104 164);
+  --color-emerald-700: oklch(0.468 0.086 165);
+  --color-emerald-800: oklch(0.389 0.068 166);
+  --color-emerald-900: oklch(0.323 0.054 166);
+  --color-emerald-950: oklch(0.216 0.038 167);
+
+  /* ---- Attention: ochre/brass rather than highlighter yellow ---- */
+  --color-amber-50: oklch(0.981 0.019 84);
+  --color-amber-100: oklch(0.956 0.044 85);
+  --color-amber-200: oklch(0.912 0.080 82);
+  --color-amber-300: oklch(0.858 0.113 78);
+  --color-amber-400: oklch(0.799 0.132 72);
+  --color-amber-500: oklch(0.736 0.134 66);
+  --color-amber-600: oklch(0.637 0.126 58);
+  --color-amber-700: oklch(0.528 0.108 53);
+  --color-amber-800: oklch(0.437 0.088 51);
+  --color-amber-900: oklch(0.369 0.071 50);
+  --color-amber-950: oklch(0.243 0.049 50);
+
+  /* ---- Danger: a serious, desaturated crimson ---- */
+  --color-red-50: oklch(0.972 0.013 17);
+  --color-red-100: oklch(0.942 0.030 17);
+  --color-red-200: oklch(0.891 0.058 18);
+  --color-red-300: oklch(0.812 0.096 19);
+  --color-red-400: oklch(0.710 0.152 22);
+  --color-red-500: oklch(0.626 0.183 25);
+  --color-red-600: oklch(0.552 0.187 27);
+  --color-red-700: oklch(0.470 0.164 27);
+  --color-red-800: oklch(0.399 0.135 27);
+  --color-red-900: oklch(0.340 0.110 26);
+  --color-red-950: oklch(0.224 0.074 25);
+
+  /* ---- Corner radius: one step softer throughout ---- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.75rem;
+  --radius-3xl: 1rem;
+
+  /* ---- Elevation: layered, low-alpha, tinted ocean rather than pure black ---- */
+  --shadow-2xs: 0 1px 1px oklch(0.300 0.070 248 / 0.04);
+  --shadow-xs: 0 1px 2px oklch(0.300 0.070 248 / 0.05), 0 1px 1px oklch(0.300 0.070 248 / 0.03);
+  --shadow-sm: 0 1px 2px oklch(0.300 0.070 248 / 0.05), 0 2px 4px oklch(0.300 0.070 248 / 0.04);
+  --shadow-md: 0 2px 4px oklch(0.300 0.070 248 / 0.04), 0 6px 12px oklch(0.300 0.070 248 / 0.06);
+  --shadow-lg: 0 4px 8px oklch(0.300 0.070 248 / 0.05), 0 12px 24px oklch(0.300 0.070 248 / 0.07);
+  --shadow-xl: 0 8px 16px oklch(0.300 0.070 248 / 0.06), 0 20px 40px oklch(0.300 0.070 248 / 0.09);
+  --shadow-2xl: 0 12px 24px oklch(0.300 0.070 248 / 0.08), 0 32px 64px oklch(0.300 0.070 248 / 0.14);
+
+  /* ---- Easing: authored curves, used everywhere ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ---- Named animations exposed as utilities ---- */
+  --animate-shimmer: shimmer 1.8s linear infinite;
+  --animate-spin-slow: spin 3.2s linear infinite;
+  --animate-pulse-subtle: pulse-subtle 3s cubic-bezier(0.32, 0.72, 0, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-rise: enter 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ==========================================================================
+   Semantic surface tokens
+   ========================================================================== */
+@layer base {
+  :root {
+    --ncct-ink: oklch(0.260 0.050 250);
+    --ncct-navy: oklch(0.295 0.066 252);
+    --ncct-blue: oklch(0.575 0.140 243);
+    --ncct-teal: oklch(0.600 0.105 221);
+    --ncct-mint: oklch(0.952 0.034 212);
+    --ncct-amber: oklch(0.736 0.134 66);
+    --ncct-paper: oklch(0.982 0.008 228);
+    --ncct-line: oklch(0.930 0.014 234);
+
+    --ncct-surface: #ffffff;
+    --ncct-surface-sunken: oklch(0.969 0.009 232);
+    --ncct-border: oklch(0.925 0.016 234);
+    --ncct-border-strong: oklch(0.870 0.024 236);
+    --ncct-focus: oklch(0.575 0.140 243);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply text-slate-700 antialiased min-h-screen;
+    background: var(--ncct-paper);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings carry the weight; tracking tightens as size grows. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    color: var(--ncct-ink);
+    font-weight: 600;
+    letter-spacing: -0.014em;
+  }
+
+  h1 { letter-spacing: -0.024em; }
+  h2 { letter-spacing: -0.020em; }
+  h3 { letter-spacing: -0.017em; }
+
+  /* Figures line up in columns wherever they are compared. */
+  table, .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    letter-spacing: -0.006em;
+  }
+
+  /* One focus treatment for the whole product. */
+  :focus-visible {
+    outline: 2px solid var(--ncct-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background: oklch(0.898 0.057 234);
+    color: var(--ncct-navy);
+  }
+
+  #root { min-height: 100vh; }
+
+}
+
+/* ==========================================================================
+   Scrollbars — present but recessive
+   ========================================================================== */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: oklch(0.875 0.020 236);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.715 0.027 240);
+  background-clip: content-box;
+}
+::-webkit-scrollbar-corner { background: transparent; }
+
+.scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { border-width: 1px; }
+.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* Chrome surfaces need a thumb that reads on blue. */
+.scrollbar-dark::-webkit-scrollbar-thumb {
+  background: oklch(1 0 0 / 0.28);
+  background-clip: content-box;
+}
+.scrollbar-dark::-webkit-scrollbar-thumb:hover {
+  background: oklch(1 0 0 / 0.42);
+  background-clip: content-box;
+}
+
+/* ==========================================================================
+   Card system — the primary surface, used in ~44 places across the views
+   ========================================================================== */
+/* The card lives in the components layer so per-card utilities still win:
+   several cards carry an accent `border-l-4 border-l-*` or a tinted
+   `bg-gradient-to-br`, and an unlayered `background`/`border` shorthand here
+   would silently override both. `background-color` (not `background`) leaves
+   those gradients' background-image intact. */
+@layer components {
+  .ncct-card {
+    position: relative;
+    background-color: var(--ncct-surface);
+    border: 1px solid var(--ncct-border);
+    border-radius: var(--radius-xl);
+    box-shadow:
+      0 1px 2px oklch(0.300 0.070 248 / 0.04),
+      0 2px 6px oklch(0.300 0.070 248 / 0.04);
+    transition:
+      box-shadow 280ms var(--ease-standard),
+      border-color 280ms var(--ease-standard),
+      transform 280ms var(--ease-standard);
+  }
+}
+
+/* A hairline of light along the top edge reads as a lit surface. */
+@layer components {
+  .ncct-card::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: linear-gradient(to right, transparent, oklch(1 0 0 / 0.9), transparent);
+    pointer-events: none;
+  }
+
+  .ncct-card:hover {
+    border-color: var(--ncct-border-strong);
+    box-shadow:
+      0 2px 4px oklch(0.300 0.070 248 / 0.04),
+      0 10px 28px oklch(0.300 0.070 248 / 0.09);
+  }
+
+  .ncct-card-header {
+    @apply px-5 py-4 flex items-center justify-between gap-3;
+    border-bottom: 1px solid var(--ncct-border);
+  }
+
+  /* Opt-out for cards nested inside another card or in a tight grid. */
+  .ncct-card--flat:hover { transform: none; }
+}
+
+/* A card that is itself a dark panel must not get the light top hairline. */
+.ncct-card.ncct-chrome::after { display: none; }
+
+/* ==========================================================================
+   Motion
+   Choreography over decoration: content resolves upward into place and
+   overlays scale in from just under full size. Nothing loops in the
+   periphery unless it is reporting live state.
+   ========================================================================== */
+@keyframes enter {
+  from { opacity: 0; transform: translateY(8px) scale(0.995); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoom-in-95 {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-from-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-from-bottom {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes shimmer {
+  from { background-position: -160% 0; }
+  to { background-position: 160% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* --- Compatibility layer -------------------------------------------------
+   The views already carry `animate-in fade-in`, `slide-in-from-right` and
+   `zoom-in-95` from a plugin that was never installed, so those elements
+   appeared with no transition at all. Implementing the classes here makes
+   every existing modal and drawer animate without touching the views.
+   ------------------------------------------------------------------------ */
+.animate-in {
+  animation-duration: 300ms;
+  animation-timing-function: var(--ease-out-expo);
+  animation-fill-mode: both;
+  animation-name: fade-in;
+}
+.animate-in.zoom-in-95 { animation-name: zoom-in-95; }
+.animate-in.slide-in-from-right { animation-name: slide-in-from-right; }
+.animate-in.slide-in-from-bottom { animation-name: slide-in-from-bottom; }
+
+/* `duration-*` is a transition utility in Tailwind; these rules only add the
+   matching animation duration, leaving transition behaviour untouched. */
+.animate-in.duration-200 { animation-duration: 200ms; }
+.animate-in.duration-300 { animation-duration: 300ms; }
+.animate-in.duration-500 { animation-duration: 500ms; }
+
+/* --- Page choreography ---------------------------------------------------
+   `app-page-enter` is keyed on the active tab in MainLayout, so every view
+   change replays this. Direct children resolve in sequence rather than all
+   at once, which is what makes a dense dashboard read as composed.
+   ------------------------------------------------------------------------ */
+.app-page-enter { animation: fade-in 260ms var(--ease-out-expo) both; }
+
+.app-page-enter > * {
+  animation: enter 520ms var(--ease-out-expo) both;
+}
+.app-page-enter > *:nth-child(1) { animation-delay: 20ms; }
+.app-page-enter > *:nth-child(2) { animation-delay: 70ms; }
+.app-page-enter > *:nth-child(3) { animation-delay: 120ms; }
+.app-page-enter > *:nth-child(4) { animation-delay: 170ms; }
+.app-page-enter > *:nth-child(5) { animation-delay: 210ms; }
+.app-page-enter > *:nth-child(6) { animation-delay: 245ms; }
+.app-page-enter > *:nth-child(7) { animation-delay: 275ms; }
+.app-page-enter > *:nth-child(n + 8) { animation-delay: 300ms; }
+
+/* Grids inside a view stagger their own cards, a row at a time. */
+.app-page-enter > * > .grid > * {
+  animation: enter 520ms var(--ease-out-expo) both;
+}
+.app-page-enter > * > .grid > *:nth-child(1) { animation-delay: 80ms; }
+.app-page-enter > * > .grid > *:nth-child(2) { animation-delay: 130ms; }
+.app-page-enter > * > .grid > *:nth-child(3) { animation-delay: 180ms; }
+.app-page-enter > * > .grid > *:nth-child(4) { animation-delay: 225ms; }
+.app-page-enter > * > .grid > *:nth-child(n + 5) { animation-delay: 265ms; }
+
+/* ==========================================================================
+   Chrome surfaces
+   ========================================================================== */
+
+/* Frosted bar for sticky headers. */
+.ncct-glass {
+  background: oklch(1 0 0 / 0.82);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+}
+
+/* Beach-blue chrome for banners, drawer headers and hero panels: a diagonal
+   run from deep water to shallows keeps it from going flat. */
+.ncct-chrome {
+  background: linear-gradient(
+    135deg,
+    oklch(0.440 0.110 248) 0%,
+    oklch(0.500 0.126 245) 55%,
+    oklch(0.545 0.120 236) 100%
+  );
+}
+
+/* Headings with no colour utility inherit the chrome's white text instead of
+   the global ink colour. Kept in the base layer so utilities still win. */
+@layer base {
+  .ncct-chrome :is(h1, h2, h3, h4, h5, h6):not(.bg-white *) { color: inherit; }
+}
+
+/* Content authored for the old navy chrome used cool greys and pale indigo
+   for secondary text; on blue those must become translucent white to stay
+   legible. Unlayered, so they win over the utility classes they correct. */
+.ncct-chrome .text-slate-300:not(.bg-white *),
+.ncct-chrome .text-indigo-100:not(.bg-white *),
+.ncct-chrome .text-indigo-200:not(.bg-white *) { color: oklch(1 0 0 / 0.9); }
+.ncct-chrome .text-slate-400:not(.bg-white *),
+.ncct-chrome .text-indigo-300:not(.bg-white *) { color: oklch(1 0 0 / 0.8); }
+.ncct-chrome .text-slate-500:not(.bg-white *),
+.ncct-chrome .text-indigo-400:not(.bg-white *) { color: oklch(1 0 0 / 0.68); }
+.ncct-chrome .text-teal-300:not(.bg-white *),
+.ncct-chrome .text-teal-400:not(.bg-white *) { color: oklch(0.925 0.070 205); }
+.ncct-chrome .border-indigo-800:not(.bg-white *),
+.ncct-chrome .border-indigo-900:not(.bg-white *) { border-color: oklch(1 0 0 / 0.16); }
+
+/* The rail marker behind an active nav item. */
+.ncct-nav-item {
+  position: relative;
+  transition:
+    background-color 220ms var(--ease-standard),
+    color 220ms var(--ease-standard);
+}
+
+.ncct-nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: currentColor;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition:
+    height 300ms var(--ease-out-expo),
+    opacity 220ms var(--ease-standard);
+}
+
+.ncct-nav-item[data-active='true']::before {
+  height: 58%;
+  opacity: 1;
+}
+
+/* Skeleton / loading sweep. */
+.ncct-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--ncct-surface-sunken) 25%,
+    oklch(0.985 0.002 250) 50%,
+    var(--ncct-surface-sunken) 75%
+  );
+  background-size: 260% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* A live-status dot with a single expanding ring. */
+.ncct-live-dot {
+  position: relative;
+  display: inline-flex;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+.ncct-live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: live-ring 2.4s var(--ease-out-expo) infinite;
+}
+
+@keyframes live-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  70% { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Press feedback for primary controls. */
+.ncct-press {
+  transition:
+    transform 160ms var(--ease-standard),
+    box-shadow 220ms var(--ease-standard),
+    background-color 220ms var(--ease-standard),
+    border-color 220ms var(--ease-standard);
+}
+.ncct-press:active { transform: scale(0.975); }
+
+/* Recharts: soften the default grid and tooltip to match the system. */
+.recharts-cartesian-grid line { stroke: var(--ncct-border); }
+.recharts-text { fill: oklch(0.575 0.019 257); font-size: 11px; }
+.recharts-default-tooltip {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--ncct-border) !important;
+  box-shadow: var(--shadow-lg) !important;
+  font-size: 12px !important;
+}
+
+/* ==========================================================================
+   Micro-type normalisation
+   The views had accumulated four ad-hoc sizes below 11px (8, 9, 10, 11),
+   used interchangeably for badges, meta lines and table captions. Anything
+   under 11px is uncomfortable to read and is the strongest single signal of
+   an unpolished interface, so they collapse here into one micro size with
+   the slight positive tracking small text needs. Overriding the generated
+   utilities keeps this a single edit rather than 300 scattered ones.
+   ========================================================================== */
+.text-\[8px\],
+.text-\[9px\],
+.text-\[10px\],
+.text-\[11px\] {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem;
+  letter-spacing: 0.005em;
+}
+
+/* ==========================================================================
+   Reduced motion — keep the information, drop the movement
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ncct-card:hover { transform: none; }
+}
+
+/* ==========================================================================
+   Site chrome — header, menus, buttons, heroes
+   ========================================================================== */
+@layer components {
+  .ncct-wordmark {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  /* Primary navigation link: full-height with an underline marker. */
+  .ncct-topnav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.875rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-slate-700);
+    white-space: nowrap;
+    transition: color 160ms var(--ease-standard);
+  }
+  .ncct-topnav-link::after {
+    content: '';
+    position: absolute;
+    left: 0.875rem;
+    right: 0.875rem;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--color-indigo-600);
+    transform: scaleX(0);
+    transition: transform 220ms var(--ease-out-expo);
+  }
+  .ncct-topnav-link:hover { color: var(--color-indigo-700); }
+  .ncct-topnav-link[data-active='true'] { color: var(--color-indigo-700); font-weight: 600; }
+  .ncct-topnav-link[data-active='true']::after,
+  .ncct-topnav-link:hover::after { transform: scaleX(1); }
+
+  .ncct-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    z-index: 50;
+    padding: 0.375rem;
+    background: #fff;
+    border: 1px solid var(--ncct-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    color: var(--color-slate-700);
+    animation: enter 200ms var(--ease-out-expo) both;
+  }
+  .ncct-menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5625rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    text-align: left;
+    color: var(--color-slate-700);
+    transition: background-color 140ms var(--ease-standard);
+  }
+  .ncct-menu-item:hover { background: var(--color-slate-100); }
+
+  .ncct-btn-primary,
+  .ncct-btn-secondary,
+  .ncct-btn-light,
+  .ncct-btn-outline-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5625rem 1.125rem;
+    border-radius: 9999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 160ms var(--ease-standard), border-color 160ms var(--ease-standard), box-shadow 160ms var(--ease-standard);
+  }
+  .ncct-btn-primary { background: var(--color-indigo-600); color: #fff; }
+  .ncct-btn-primary:hover { background: var(--color-indigo-700); box-shadow: var(--shadow-sm); }
+  .ncct-btn-secondary { background: #fff; color: var(--color-indigo-700); border: 1px solid var(--color-slate-300); }
+  .ncct-btn-secondary:hover { background: var(--color-indigo-50); border-color: var(--color-indigo-300); }
+  .ncct-btn-light { background: #fff; color: var(--color-indigo-800); }
+  .ncct-btn-light:hover { background: var(--color-indigo-50); }
+  .ncct-btn-outline-light { color: #fff; border: 1px solid oklch(1 0 0 / 0.6); }
+  .ncct-btn-outline-light:hover { background: oklch(1 0 0 / 0.12); border-color: #fff; }
+
+  /* Full-bleed hero that escapes the centred content column. */
+  .ncct-hero {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-top: -2rem !important; /* beats space-y-* resets on the parent */
+    overflow: hidden;
+    color: #fff;
+    background: var(--color-indigo-900);
+  }
+  .ncct-hero-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ncct-hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, oklch(0.30 0.07 250 / 0.94) 0%, oklch(0.36 0.09 248 / 0.84) 45%, oklch(0.43 0.11 245 / 0.45) 100%);
+  }
+  .ncct-hero-inner {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3.5rem 1rem;
+  }
+  @media (min-width: 1024px) {
+    .ncct-hero-inner { padding: 4.5rem 2rem; }
+  }
+  .ncct-hero h1 {
+    color: #fff;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Centered section heading, as on editorial course sites. */
+  .ncct-section-title {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    font-weight: 400;
+    color: var(--ncct-ink);
+    letter-spacing: -0.015em;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   Page title band — breadcrumb + page header read as one full-width strip
+   ========================================================================== */
+:root { --ncct-band: oklch(0.958 0.022 236); }
+
+.ncct-band { background: var(--ncct-band); }
+
+@layer components {
+  .ncct-page-header {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-top: -2rem !important; /* beats space-y-* resets on the parent */
+    padding: 1rem 1rem 2.5rem;
+    background: var(--ncct-band);
+    border-bottom: 1px solid var(--ncct-border);
+  }
+  @media (min-width: 1024px) {
+    .ncct-page-header {
+      padding-left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
+      padding-right: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
+    }
+  }
+}
+
+/* Unlayered so they win over the compact utility sizes the views carry. */
+.ncct-page-header h1 {
+  font-size: 2.25rem;
+  line-height: 2.75rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ncct-ink);
+}
+.ncct-page-header p.text-xs {
+  font-size: 1.0625rem;
+  line-height: 1.6rem;
+  color: var(--color-slate-600);
+  margin-top: 0.5rem;
+  max-width: 60rem;
+}
+@media (max-width: 640px) {
+  .ncct-page-header h1 { font-size: 1.75rem; line-height: 2.25rem; }
+}
+
+/* ==========================================================================
+   Blue panels — keep actions and figures legible on the gradient
+   ========================================================================== */
+.ncct-chrome button.bg-indigo-600:not(.bg-white *) {
+  background-color: #fff;
+  color: var(--color-indigo-700);
+}
+.ncct-chrome button.bg-indigo-600:not(.bg-white *):hover { background-color: var(--color-indigo-50); }
+.ncct-chrome .text-amber-300:not(.bg-white *),
+.ncct-chrome .text-amber-400:not(.bg-white *) { color: oklch(0.91 0.10 88); }
+.ncct-chrome .text-red-300:not(.bg-white *),
+.ncct-chrome .text-red-400:not(.bg-white *) { color: oklch(0.88 0.08 22); }
+.ncct-chrome .text-emerald-300:not(.bg-white *),
+.ncct-chrome .text-emerald-400:not(.bg-white *) { color: oklch(0.90 0.09 160); }
+
+/* Table actions stay on one line. */
+td button { white-space: nowrap; }
