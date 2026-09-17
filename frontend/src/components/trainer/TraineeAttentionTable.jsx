@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AlertCircle, AlertTriangle, CheckCircle2, Search, ChevronRight } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const TraineeAttentionTable = () => {
   const { traineeRiskList, setSelectedTraineeForDrawer, demoMode } = useApp();

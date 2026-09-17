@@ -1,6 +1,6 @@
 import React from 'react';
 import { Calendar, Clock, MapPin, ChevronRight } from 'lucide-react';
-import { useData } from '../../context/DataContext';
+import { useData } from '../../context/SystemStateContext';
 
 export const UpcomingScheduleCard = () => {
   const { upcomingSchedule } = useData();

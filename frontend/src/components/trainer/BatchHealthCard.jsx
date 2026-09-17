@@ -1,6 +1,6 @@
 import React from 'react';
 import { Activity } from 'lucide-react';
-import { useData } from '../../context/DataContext';
+import { useData } from '../../context/SystemStateContext';
 
 export const BatchHealthCard = () => {
   const { batchHealth } = useData();

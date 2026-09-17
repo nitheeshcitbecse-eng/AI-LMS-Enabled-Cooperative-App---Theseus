@@ -1,7 +1,6 @@
 import React from 'react';
 import { MapPin, ChevronRight, Building } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const CareerPreviewCard = () => {
   const { careerOpportunities } = useData();

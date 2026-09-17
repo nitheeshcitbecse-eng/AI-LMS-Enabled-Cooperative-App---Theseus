@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Clock, Target, Sparkles } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const NextBestActionCard = () => {
   const { openModal } = useApp();

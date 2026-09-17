@@ -3,7 +3,7 @@
  *
  * Each role has a base path and a map of page id → URL segment. Page ids are the
  * values components already pass to `setActiveTab(...)`, so navigation keeps working
- * through AppContext while the browser URL, refresh and back button all behave.
+ * through SystemStateContext (useApp) while the browser URL, refresh and back button all behave.
  */
 
 export const PATHS = {

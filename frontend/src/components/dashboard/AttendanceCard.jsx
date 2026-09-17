@@ -1,7 +1,6 @@
 import React from 'react';
 import { Camera, CheckCircle2 } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const AttendanceCard = () => {
   const { attendance } = useData();

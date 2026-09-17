@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldCheck, UserCheck } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const CompetencyVerificationCard = () => {
   const { competencyClaims, verifyCompetencyClaim } = useApp();

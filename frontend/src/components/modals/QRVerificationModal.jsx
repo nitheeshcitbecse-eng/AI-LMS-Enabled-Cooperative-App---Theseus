@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { X, QrCode, ShieldCheck, CheckCircle2, Copy } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const QRVerificationModal = () => {
   const { trainee } = useData();

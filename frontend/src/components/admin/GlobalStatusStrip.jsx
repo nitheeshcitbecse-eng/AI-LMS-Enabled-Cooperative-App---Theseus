@@ -1,6 +1,6 @@
 import React from 'react';
 import { Network, RefreshCw, BookOpen, Users, Gauge } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 import { t } from '../../utils/i18n';
 
 export const GlobalStatusStrip = () => {

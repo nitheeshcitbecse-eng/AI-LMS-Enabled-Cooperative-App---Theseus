@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Check, ShieldCheck, Sparkles } from 'lucide-react';
-import { useData } from '../../context/DataContext';
+import { useData } from '../../context/SystemStateContext';
 
 export const LearningJourneyTimeline = () => {
   const { learningJourneyStages } = useData();

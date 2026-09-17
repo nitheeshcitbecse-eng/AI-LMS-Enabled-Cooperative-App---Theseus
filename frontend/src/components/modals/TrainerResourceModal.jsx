@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, BookOpen, Upload, CheckCircle2 } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { trainerService } from '../../Services/api';
+import { useApp } from '../../context/SystemStateContext';
+import { trainerService } from '../../services/api';
 
 export const TrainerResourceModal = () => {
   const { activeModal, closeModal } = useApp();

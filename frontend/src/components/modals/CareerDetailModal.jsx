@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Building, MapPin, CheckCircle2, AlertTriangle, ArrowRight, ShieldCheck } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { traineeService } from '../../Services/api';
+import { useApp } from '../../context/SystemStateContext';
+import { traineeService } from '../../services/api';
 
 export const CareerDetailModal = () => {
   const { activeModal, closeModal, selectedOpportunity } = useApp();

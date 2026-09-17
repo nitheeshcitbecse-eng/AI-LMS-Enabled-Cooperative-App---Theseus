@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { X, Sparkles, Send, Bot, ArrowRight, Mic } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
-import { aiService } from '../../Services/api';
+import { useApp, useData } from '../../context/SystemStateContext';
+import { aiService } from '../../services/api';
 
 export const AIOpsAssistantDrawer = () => {
   const { admin: adminData } = useData();

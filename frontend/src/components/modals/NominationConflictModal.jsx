@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, AlertTriangle } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { adminService } from '../../Services/api';
+import { useApp } from '../../context/SystemStateContext';
+import { adminService } from '../../services/api';
 
 export const NominationConflictModal = () => {
   const { activeModal, closeModal, selectedConflictItem } = useApp();

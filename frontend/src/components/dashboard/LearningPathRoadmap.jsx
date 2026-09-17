@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, Circle, ChevronRight, ShieldCheck } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const LearningPathRoadmap = () => {
   const { setActiveTab } = useApp();

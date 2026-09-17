@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldCheck, QrCode, Download, Printer, CheckCircle2 } from 'lucide-react';
-import { useData } from '../../context/DataContext';
+import { useData } from '../../context/SystemStateContext';
 
 export const DigitallyVerifiedCertificate = ({ certificate: certificateProp, showActions = true }) => {
   const { trainee, certificates } = useData();

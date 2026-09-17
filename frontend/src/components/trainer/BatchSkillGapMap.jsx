@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, User } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const BatchSkillGapMap = () => {
   const { openModal, demoMode } = useApp();

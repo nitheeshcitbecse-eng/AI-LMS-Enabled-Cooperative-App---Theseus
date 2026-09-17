@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Zap, MessageSquare } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const TraineeDetailDrawer = () => {
   const {

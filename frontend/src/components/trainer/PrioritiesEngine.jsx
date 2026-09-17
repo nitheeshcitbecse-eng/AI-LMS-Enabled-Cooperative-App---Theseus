@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Zap } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const PrioritiesEngine = () => {
   const { openModal, setActiveTab, setSelectedTraineeForDrawer, traineeRiskList } = useApp();

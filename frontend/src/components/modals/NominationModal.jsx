@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { X, FileText, CheckCircle2, Building, Download, Sparkles } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const NominationModal = () => {
   const { nominationInfo } = useData();

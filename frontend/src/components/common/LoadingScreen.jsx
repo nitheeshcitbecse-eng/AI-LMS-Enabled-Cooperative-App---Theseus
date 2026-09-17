@@ -1,6 +1,6 @@
 import React from 'react';
 import { RefreshCw, AlertTriangle } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/SystemStateContext';
 
 /** Full-page state shown while dashboard data loads from the API, or when it fails. */
 export const LoadingScreen = ({ error, onRetry }) => {

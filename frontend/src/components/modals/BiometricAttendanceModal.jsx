@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Camera, Scan, CheckCircle2, QrCode, Sparkles } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
-import { traineeService } from '../../Services/api';
+import { useApp, useData } from '../../context/SystemStateContext';
+import { traineeService } from '../../services/api';
 
 export const BiometricAttendanceModal = () => {
   const { trainee } = useData();

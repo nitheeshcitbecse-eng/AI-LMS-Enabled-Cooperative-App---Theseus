@@ -1,7 +1,6 @@
 import React from 'react';
 import { Award, Eye, CheckCircle2 } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const CertificationCard = () => {
   const { certificates: certificatesData } = useData();

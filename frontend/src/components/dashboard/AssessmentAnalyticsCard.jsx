@@ -10,7 +10,7 @@ import {
   Tooltip,
   ReferenceLine,
 } from 'recharts';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const AssessmentAnalyticsCard = () => {
   const { assessments } = useApp();

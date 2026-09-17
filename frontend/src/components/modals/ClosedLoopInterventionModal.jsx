@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, Zap, Award, BookOpen } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const ClosedLoopInterventionModal = () => {
   const { aiRecommendation } = useData();

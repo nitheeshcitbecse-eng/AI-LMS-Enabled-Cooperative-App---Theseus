@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { X, Building, Search, ShieldCheck, UserCheck, Send } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const EmployerDashboardPreviewModal = () => {
   const { trainee, skills } = useData();

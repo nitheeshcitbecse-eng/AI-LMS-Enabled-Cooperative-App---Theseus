@@ -1,7 +1,6 @@
 import React from 'react';
 import { PlayCircle, Calendar, Clock, MapPin, Building2, BookOpen } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const WelcomeBanner = () => {
   const { trainee } = useData();

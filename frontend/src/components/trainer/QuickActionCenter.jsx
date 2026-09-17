@@ -1,6 +1,6 @@
 import React from 'react';
 import { Zap, Camera, Bell, BookOpen, BarChart3, ShieldCheck } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const QuickActionCenter = () => {
   const { openModal, setActiveTab } = useApp();

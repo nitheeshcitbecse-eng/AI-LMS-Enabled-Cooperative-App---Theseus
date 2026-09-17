@@ -1,6 +1,6 @@
 # Backend Integration (FastAPI)
 
-The frontend talks to the backend only through `src/Services/`, which holds two files: `apiClient.js` (configuration, token storage, HTTP client) and `api.js` (every endpoint call). Every function in `api.js` has a mock branch and an API branch; flipping one environment variable switches the whole app from mock data to your FastAPI server.
+The frontend talks to the backend only through `src/services/api.js`, which holds the configuration, token storage and HTTP client followed by every endpoint call. Every endpoint function has a mock branch and an API branch; flipping one environment variable switches the whole app from mock data to your FastAPI server.
 
 ## 1. Switch the frontend to the API
 
@@ -90,13 +90,13 @@ app.add_middleware(
 
 ## 5. Dashboard payloads
 
-Each dashboard endpoint returns one object. The exact field shapes are the mock files in `src/utils/mock/` — treat them as the response schema.
+Each dashboard endpoint returns one object. The exact field shapes are the mock files in `src/data/` — treat them as the response schema.
 
 | Endpoint | Keys | Mock source |
 |---|---|---|
-| `GET /trainee/dashboard` | `trainee, hostelLogistics, nominationInfo, learningJourneyStages, courses, assessments, skills, aiRecommendation, closedLoopIntervention, certificates, attendance, careerOpportunities, careerReadiness, gamification, upcomingSchedule, notifications` | `utils/mock/mockData.js` |
-| `GET /trainer/dashboard` | `trainer, batchHealth, priorityInsights, traineeRiskList, silentWeakSpots, interventions, topicHeatmap, competencyEvidenceClaims, trainerNotes` | `utils/mock/mockTrainerData.js` |
-| `GET /admin/dashboard` | `admin, networkInstitutes, operationalSignals, demandSignals, programmeOperations, nominationConflicts, timetableSessions, hostelBlocks, hostelAllocations, logisticsChecklist, trainerCapacity, resourceExchange` | `utils/mock/mockAdminData.js` |
+| `GET /trainee/dashboard` | `trainee, hostelLogistics, nominationInfo, learningJourneyStages, courses, assessments, skills, aiRecommendation, closedLoopIntervention, certificates, attendance, careerOpportunities, careerReadiness, gamification, upcomingSchedule, notifications` | `data/mockData.js` |
+| `GET /trainer/dashboard` | `trainer, batchHealth, priorityInsights, traineeRiskList, silentWeakSpots, interventions, topicHeatmap, competencyEvidenceClaims, trainerNotes` | `data/mockTrainerData.js` |
+| `GET /admin/dashboard` | `admin, networkInstitutes, operationalSignals, demandSignals, programmeOperations, nominationConflicts, timetableSessions, hostelBlocks, hostelAllocations, logisticsChecklist, trainerCapacity, resourceExchange` | `data/mockAdminData.js` |
 
 For example, `mockTrainee` in `mockData.js` is the shape of `trainee`, and `mockCourses` is the shape of `courses`.
 
@@ -143,6 +143,6 @@ def trainee_dashboard(creds=Depends(bearer)):
 | To change | Edit |
 |---|---|
 | API base URL / mock switch | `.env` |
-| A route path or request body | `src/Services/api.js` |
-| Token storage, headers, error parsing, timeouts | `src/Services/apiClient.js` |
-| Which data loads after sign-in | `src/context/DataContext.jsx` |
+| A route path or request body | `src/services/api.js` (endpoint services) |
+| Token storage, headers, error parsing, timeouts | `src/services/api.js` (top of the file) |
+| Which data loads after sign-in | `src/hooks/useSystemInit.js` |

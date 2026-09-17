@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { X, Zap, CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const CreateInterventionWizardModal = () => {
   const { traineeRiskList } = useData();

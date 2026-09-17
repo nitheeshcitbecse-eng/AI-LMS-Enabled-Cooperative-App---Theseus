@@ -1,7 +1,6 @@
 import React from 'react';
 import { QrCode, ShieldCheck, ExternalLink, Building2, User } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { useData } from '../../context/DataContext';
+import { useApp, useData } from '../../context/SystemStateContext';
 
 export const DigitalIdCard = () => {
   const { trainee } = useData();

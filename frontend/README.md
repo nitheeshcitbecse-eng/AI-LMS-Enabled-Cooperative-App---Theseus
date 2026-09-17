@@ -17,49 +17,57 @@ With `VITE_USE_MOCK=true` (the default) the app runs entirely on local mock data
 
 ```
 src/
-├── assets/                 Images and static files
-├── components/             Reusable UI
-│   ├── layout/             SiteHeader, SiteFooter, MainLayout, navConfig (navigation per role)
-│   ├── dashboard/          Trainee dashboard cards
-│   ├── trainer/            Trainer dashboard cards and drawers
-│   ├── admin/              Admin status strip
-│   ├── modals/             Dialogs (create programme, schedule session, attendance, …)
-│   ├── ai/                 AI assistant drawers (one per role)
-│   ├── certificate/        Digital certificate
-│   ├── offline/            Sync centre
-│   └── common/             Loading / error screen
+├── assets/                     Images and static files
+├── components/                 Reusable UI
+│   ├── dashboard/              Trainee dashboard cards
+│   ├── trainer/                Trainer dashboard cards and drawers
+│   ├── admin/                  Admin status strip
+│   ├── modals/                 Dialogs (create programme, schedule session, attendance, …)
+│   ├── ai/                     AI assistant drawers (one per role)
+│   ├── certificate/            Digital certificate
+│   ├── offline/                Sync centre
+│   └── common/                 Loading / error screen
 ├── context/
-│   ├── AuthContext.jsx     Session: login, signup, logout, current user, token
-│   ├── DataContext.jsx     Loads dashboard data for the signed-in role via Services
-│   └── AppContext.jsx      UI state and actions (useApp) used across pages
-├── Pages/
-│   ├── Auth/               SignInPage
-│   ├── Trainee/            12 pages (Overview, Learning, Assessments, …)
-│   ├── Trainer/            11 pages (Overview, Batches, Attendance, …)
-│   └── Admin/              16 pages (Overview, Programmes, Nominations, …)
-├── Services/
-│   ├── apiClient.js        Config (base URL, mock switch), token storage, fetch wrapper, FastAPI error handling
-│   └── api.js              Every backend call: authService, traineeService, trainerService,
-│                           adminService, aiService, syncService
+│   └── SystemStateContext.jsx  Global state: useAuth() session, useData() dashboards, useApp() UI state and actions
+├── data/                       Mock data used until the backend is connected (also the response schema)
+│   ├── mockData.js             Trainee
+│   ├── mockTrainerData.js      Trainer
+│   └── mockAdminData.js        Institution admin
+├── hooks/
+│   ├── useApi.js               Loading / error / data state for any services call
+│   └── useSystemInit.js        Boots the app: restores the session, loads dashboards for the role
+├── layouts/                    MainLayout, SiteHeader, SiteFooter, navConfig (navigation per role)
+├── pages/
+│   ├── Auth/                   SignInPage
+│   ├── NotFound/               404 page
+│   ├── Trainee/                12 pages (Overview, Learning, Assessments, …)
+│   ├── Trainer/                11 pages (Overview, Batches, Attendance, …)
+│   └── Admin/                  16 pages (Overview, Programmes, Nominations, …)
+├── routes/
+│   ├── AppRoutes.jsx           Route tree and guards (signed-out, signed-in, role access)
+│   └── routePaths.js           Every URL, per role
+├── services/
+│   └── api.js                  Config, token storage, HTTP client and every backend call:
+│                               authService, traineeService, trainerService, adminService, aiService, syncService
 ├── utils/
-│   ├── i18n.js             5 languages
-│   ├── voiceAssistant.js
-│   └── mock/               Mock data used until the backend is connected
-├── App.jsx                 Providers + layout
+│   ├── i18n.js                 5 languages
+│   └── voiceAssistant.js
+├── App.jsx                     Router + SystemStateProvider
 ├── App.css
-├── index.css               Design system (Tailwind theme, tokens)
-└── main.jsx                Entry point
+├── index.css                   Design system (Tailwind theme, tokens)
+└── main.jsx                    Entry point
 ```
 
 ## Data flow
 
 ```
-Page / component ──useData()──► DataContext ──► Services/api.js ──► FastAPI  (or utils/mock)
-Page / component ──useApp()───► AppContext  ──► Services/api.js ──► FastAPI  (actions: create, verify, sync…)
-SignInPage ────────useApp().login ─► AuthContext ─► api.js authService ─► POST /auth/login
+useSystemInit ──► services/api.js ──► FastAPI (or src/data)      session restore + dashboard load
+Page / component ──useData()──► SystemStateContext                dashboard data
+Page / component ──useApp()───► SystemStateContext ──► services/api.js   actions: create, verify, sync…
+SignInPage ────────useApp().login ─► api.js authService ─► POST /auth/login
 ```
 
-Components never call `fetch` directly; to connect the backend, only `Services/api.js` (and `.env`) change.
+Components never call `fetch` directly; to connect the backend, only `services/api.js` (and `.env`) change.
 
 ## Connecting FastAPI
 

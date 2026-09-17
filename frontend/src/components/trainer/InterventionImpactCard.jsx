@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldCheck } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const InterventionImpactCard = () => {
   const { demoMode } = useApp();

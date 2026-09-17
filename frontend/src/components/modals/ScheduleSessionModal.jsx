@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, CalendarDays, CheckCircle2 } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { adminService } from '../../Services/api';
+import { useApp } from '../../context/SystemStateContext';
+import { adminService } from '../../services/api';
 
 export const ScheduleSessionModal = () => {
   const { activeModal, closeModal } = useApp();

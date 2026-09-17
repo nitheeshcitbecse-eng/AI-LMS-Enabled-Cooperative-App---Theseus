@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Boxes } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { adminService } from '../../Services/api';
+import { useApp } from '../../context/SystemStateContext';
+import { adminService } from '../../services/api';
 
 export const ResourceRequestModal = () => {
   const { activeModal, closeModal } = useApp();

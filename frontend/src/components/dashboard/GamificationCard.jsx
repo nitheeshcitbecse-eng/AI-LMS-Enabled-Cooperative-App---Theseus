@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flame, Zap, Award, ShieldCheck, Trophy } from 'lucide-react';
-import { useData } from '../../context/DataContext';
+import { useData } from '../../context/SystemStateContext';
 
 export const GamificationCard = () => {
   const { gamification } = useData();

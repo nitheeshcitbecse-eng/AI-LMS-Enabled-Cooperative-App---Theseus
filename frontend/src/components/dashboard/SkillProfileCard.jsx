@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldCheck, ChevronRight } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const SkillProfileCard = () => {
   const { skills, setActiveTab } = useApp();

@@ -1,28 +1,20 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { DataProvider } from './context/DataContext';
-import { AppProvider } from './context/AppContext';
+import { SystemStateProvider } from './context/SystemStateContext';
 import { AppRoutes } from './routes/AppRoutes';
 import './App.css';
 
 /**
- * Provider order matters:
- *   BrowserRouter – URLs (routes/AppRoutes.jsx, routes/routePaths.js)
- *   AuthProvider  – session and token (Services/api.js → authService)
- *   DataProvider  – dashboard data for the signed-in role (Services/api.js)
- *   AppProvider   – UI state and actions used by every page via useApp()
+ * BrowserRouter       – URLs (routes/AppRoutes.jsx, routes/routePaths.js)
+ * SystemStateProvider – session, dashboard data and UI state (context/SystemStateContext.jsx),
+ *                       booted by hooks/useSystemInit.js through services/api.js
  */
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <DataProvider>
-          <AppProvider>
-            <AppRoutes />
-          </AppProvider>
-        </DataProvider>
-      </AuthProvider>
+      <SystemStateProvider>
+        <AppRoutes />
+      </SystemStateProvider>
     </BrowserRouter>
   );
 }

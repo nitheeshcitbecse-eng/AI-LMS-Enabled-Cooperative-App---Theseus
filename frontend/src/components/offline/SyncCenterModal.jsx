@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Wifi, WifiOff, RefreshCw, HardDrive } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/SystemStateContext';
 
 export const SyncCenterModal = () => {
   const { activeModal, closeModal, isOffline, setIsOffline, isSyncing, syncData, pendingSyncCount, lastSyncedTime } = useApp();
